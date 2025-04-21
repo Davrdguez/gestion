@@ -52,6 +52,18 @@ export default function AdminTagsAndCategories() {
     }
   };
 
+  const handleDeleteCategoria = async (id) => {
+    const { error } = await supabase.from('categorias').delete().eq('id', id);
+    if (!error) fetchCategorias();
+    else console.error('Error eliminando categoría:', error);
+  };
+
+  const handleDeleteEtiqueta = async (id) => {
+    const { error } = await supabase.from('etiquetas').delete().eq('id', id);
+    if (!error) fetchEtiquetas();
+    else console.error('Error eliminando etiqueta:', error);
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-6 rounded-xl shadow">
       <div>
@@ -78,10 +90,16 @@ export default function AdminTagsAndCategories() {
           </button>
         </form>
 
-        <ul className="mt-4 text-sm text-gray-700 space-y-1">
+        <ul className="mt-4 text-sm text-gray-700 space-y-2">
           {categorias.map((cat) => (
-            <li key={cat.id}>
-              {cat.nombre} <span className="text-gray-400">({cat.tipo})</span>
+            <li key={cat.id} className="flex justify-between items-center">
+              <span>{cat.nombre} <span className="text-gray-400">({cat.tipo})</span></span>
+              <button
+                onClick={() => handleDeleteCategoria(cat.id)}
+                className="text-red-500 hover:underline text-xs"
+              >
+                Eliminar
+              </button>
             </li>
           ))}
         </ul>
@@ -103,9 +121,17 @@ export default function AdminTagsAndCategories() {
           </button>
         </form>
 
-        <ul className="mt-4 text-sm text-gray-700 space-y-1">
+        <ul className="mt-4 text-sm text-gray-700 space-y-2">
           {etiquetas.map((et) => (
-            <li key={et.id}>{et.nombre}</li>
+            <li key={et.id} className="flex justify-between items-center">
+              <span>{et.nombre}</span>
+              <button
+                onClick={() => handleDeleteEtiqueta(et.id)}
+                className="text-red-500 hover:underline text-xs"
+              >
+                Eliminar
+              </button>
+            </li>
           ))}
         </ul>
       </div>
