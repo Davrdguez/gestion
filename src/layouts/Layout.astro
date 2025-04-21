@@ -1,0 +1,35 @@
+---
+const { title = "Dashboard" } = Astro.props;
+import "../styles/global.css";
+import Navbar from "../components/Navbar.jsx";
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Finanzas</title>
+  </head>
+  <body class="min-h-screen bg-gray-100 text-gray-800 flex flex-col md:flex-row">
+
+    <!-- ✅ Carga del componente React -->
+    <Navbar client:load />
+
+    <!-- Sidebar para escritorio -->
+    <aside class="hidden md:block md:w-64 bg-white shadow-md p-4">
+      <h1 class="text-xl font-bold mb-6">FinBox</h1>
+      <nav class="space-y-4">
+        <a href="/" class="block hover:text-blue-600">Dashboard</a>
+        <a href="/ingresos" class="block hover:text-blue-600">Ingresos</a>
+        <a href="/gastos" class="block hover:text-blue-600">Gastos</a>
+        <a href="/categorias" class="block hover:text-blue-600">Categorías</a>
+        <a href="/graficos" class="block hover:text-blue-600">Gráficos</a>
+      </nav>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="flex-1 p-4 md:p-6">
+      <slot />
+    </main>
+  </body>
+</html>
